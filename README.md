@@ -2,7 +2,7 @@
 Repository managed by terraform (devops-git-repos) and deployed via Terraform Cloud // repo-creator: paul.greene
 
 ## Usage Example
-Clone the plan repo to test this module with others to set up an aurora serverless rds cluster! (terraform-aws-rds-cluster-plan)[https://github.com/pgreene/terraform-aws-rds-cluster-plan]
+Clone the plan repo to test this module with others to set up an aurora serverless rds cluster! [terraform-aws-rds-cluster-plan](https://github.com/pgreene/terraform-aws-rds-cluster-plan)
 ```bash
 # SSH or HTTPS clone, whatever you prefer:
 git clone https://github.com/pgreene/terraform-aws-rds-cluster-plan.git
