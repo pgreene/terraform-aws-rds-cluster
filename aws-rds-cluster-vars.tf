@@ -1,6 +1,15 @@
-variable "name" {
-  description = "use naming module https://github.com/Voyanta/terraform-terraform-label"
+variable "cluster_identifier" {
+  description = "Name of Cluster"
   default = ""
+}
+
+variable "cluster_identifier_prefix" {
+  description = "Name of Cluster"
+  default = null
+}
+
+variable "database_name" {
+  default = null
 }
 
 variable "tags" {
@@ -95,12 +104,16 @@ variable "kms_key_id" {
 
 variable "master_username" {
   description = "(Required unless a snapshot_identifier or global_cluster_identifier is provided) Username for the master DB user. Please refer to the RDS Naming Constraints. This argument does not support in-place updates and cannot be changed during a restore from snapshot."
-  default = "admin"
+  sensitive = true
+  type = string
+  default = null
 }
 
 variable "master_password" {
   description = "(Required unless a snapshot_identifier or global_cluster_identifier is provided) Password for the master DB user. Note that this may show up in logs, and it will be stored in the state file. Please refer to the RDS Naming Constraints"
-  default = "!576849A47823723dmin4564!"
+  sensitive = true
+  type = string
+  default = null
 }
 
 variable "preferred_backup_window" {
@@ -148,6 +161,18 @@ variable "scaling_configuration_timeout_action" {
   default = null
 }
 
+variable "serverlessv2_scaling_configuration" {
+  default = null
+}
+
+variable "serverlessv2_scaling_configuration_max_capacity" {
+  default = null
+}
+
+variable "serverlessv2_scaling_configuration_min_capacity" {
+  default = null
+}
+
 /*
 SET scaling_configuration LIKE THIS IN YOUR PLAN FILE:
 scaling_configuration = {
@@ -158,6 +183,10 @@ scaling_configuration = {
     timeout_action = "ForceApplyCapacityChange"
   }
 */
+
+variable "enable_http_endpoint" {
+default = null
+}
 
 variable "skip_final_snapshot" {
   description = "(Optional) Determines whether a final DB snapshot is created before the DB cluster is deleted. If true is specified, no DB snapshot is created. If false is specified, a DB snapshot is created before the DB cluster is deleted, using the value from final_snapshot_identifier. Default is false."
