@@ -26,22 +26,23 @@ resource "aws_rds_cluster" "general" {
   port = var.port
   replication_source_identifier = var.replication_source_identifier
   
-  dynamic scaling_configuration {
-    for_each = var.scaling_configuration == null ? [] : tolist([var.scaling_configuration])
+  dynamic "scaling_configuration" {
+    for_each = var.scaling_configuration != null ? [var.scaling_configuration] : []
     content {
-      auto_pause = var.scaling_configuration_auto_pause
-      max_capacity = var.scaling_configuration_max_capacity
-      min_capacity = var.scaling_configuration_min_capacity
-      seconds_until_auto_pause = var.scaling_configuration_seconds_until_auto_pause
-      timeout_action = var.scaling_configuration_timeout_action
+      auto_pause               = lookup(scaling_configuration.value, "auto_pause", null)
+      max_capacity             = lookup(scaling_configuration.value, "max_capacity", null)
+      min_capacity             = lookup(scaling_configuration.value, "min_capacity", null)
+      seconds_until_auto_pause = lookup(scaling_configuration.value, "seconds_until_auto_pause", null)
+      timeout_action           = lookup(scaling_configuration.value, "timeout_action", null)
     }
   }
 
-  dynamic serverlessv2_scaling_configuration {
-    for_each = var.serverlessv2_scaling_configuration == null ? [] : tolist([var.serverlessv2_scaling_configuration])
+  dynamic "serverlessv2_scaling_configuration" {
+    for_each = var.serverlessv2_scaling_configuration != null ? [var.serverlessv2_scaling_configuration] : []
     content {
-      max_capacity = var.serverlessv2_scaling_configuration_max_capacity
-      min_capacity = var.serverlessv2_scaling_configuration_min_capacity
+      max_capacity = lookup(serverlessv2_scaling_configuration.value, "max_capacity", null)
+      min_capacity = lookup(serverlessv2_scaling_configuration.value, "min_capacity", null)
+      seconds_until_auto_pause = lookup(serverlessv2_scaling_configuration.value, "seconds_until_auto_pause", null)
     }
   }
 
